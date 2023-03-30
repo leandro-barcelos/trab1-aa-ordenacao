@@ -1,47 +1,64 @@
 package org.example;
 
-import java.util.Arrays;
+public class MergeSort implements Sort{
 
-public class MergeSort {
-    public int[] sort(int[] v) {
-        if (v.length == 1) {return v;}
-
-        int[] m1 = sort(Arrays.copyOfRange(v, 0, v.length / 2));
-        int[] m2 = sort(Arrays.copyOfRange(v, v.length / 2, v.length));
-        return merge(m1, m2);
+    public void sort(int[] v) {
+        mergesort(v, 0, v.length - 1);
     }
-    private int[] merge(int[] v1, int[] v2)
-    {
-        int n1 = v1.length;
-        int n2 = v2.length;
-        int i = 0;
-        int j = 0;
-        int z = 0;
-        int[] vf = new int[n1+n2];
 
-        while (i < n1 && j < n2){
-            if (v1[i] <= v2[j]){
-                vf[z] = v1[i];
+    void merge(int v[], int e, int m, int d)
+    {
+        int n1 = m - e + 1;
+        int n2 = d - m;
+ 
+        /* Create temp arrays */
+        int L[] = new int[n1];
+        int R[] = new int[n2];
+ 
+        /*Copy data to temp arrays*/
+        for (int i = 0; i < n1; ++i)
+            L[i] = v[e + i];
+        for (int j = 0; j < n2; ++j)
+            R[j] = v[m + 1 + j];
+
+        int i = 0, j = 0;
+
+        int k = e;
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) {
+                v[k] = L[i];
                 i++;
-            } else {
-                vf[z] = v2[j];
+            }
+            else {
+                v[k] = R[j];
                 j++;
             }
-            z++;
+            k++;
         }
 
         while (i < n1) {
-            vf[z] = v1[i];
-            z++;
+            v[k] = L[i];
             i++;
+            k++;
         }
-
+ 
         while (j < n2) {
-            vf[z] = v2[j];
-            z++;
+            v[k] = R[j];
             j++;
+            k++;
         }
+    }
 
-        return vf;
+    void mergesort(int v[], int e, int d)
+    {
+        if (e < d) {
+
+            int m = e + (d - e) / 2;
+ 
+            mergesort(v, e, m);
+            mergesort(v, m + 1, d);
+ 
+            merge(v, e, m, d);
+        }
     }
 }
