@@ -2,14 +2,14 @@ package org.example;
 
 import java.util.Random;
 
-public class QuickSort {
+public class QuickSort implements Sort{
 
     Random r = new Random();
     public void sort(int[] v) {
         quickSort(v, 0, v.length - 1);
     }
 
-    private void quickSort(int[] v, int s, int e) {
+    public void quickSort(int[] v, int s, int e) {
         if (s < e) {
             int q = partition(v, s, e);
             quickSort(v, s, q - 1);
@@ -17,7 +17,7 @@ public class QuickSort {
         }
     }
 
-    private int partition(int[] v, int s, int e) {
+    public int partition(int[] v, int s, int e) {
         int randomPivo = r.nextInt(s, e + 1);
         swap(v, randomPivo, e);
 
@@ -35,7 +35,7 @@ public class QuickSort {
         return q;
     }
 
-    private void swap(int[] v, int i, int j) {
+    public void swap(int[] v, int i, int j) {
         int tmp = v[i];
         v[i] = v[j];
         v[j] = tmp;
